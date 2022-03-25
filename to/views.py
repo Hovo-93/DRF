@@ -16,7 +16,7 @@ class MaxResultsSetPagination(PageNumberPagination):
 
 # Create your views here.
 class ProjectModelViewSet(ModelViewSet):
-    queryset = Project.objects.all()
+    queryset = Project.objects.all().order_by('id')
     serializer_class = ProjectModelSerializer
     filterset_fields = ['title']
     pagination_class = LargeResultsSetPagination
