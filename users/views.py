@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from rest_framework.pagination import PageNumberPagination
+from rest_framework.permissions import IsAdminUser
 from rest_framework.viewsets import ModelViewSet
 from users.models import User
 from users.serializers import UserModelSerializer
@@ -11,6 +12,7 @@ class LargeResultsSetPagination(PageNumberPagination):
 
 
 class UserCustomViewSet(mixins.ListModelMixin, mixins.UpdateModelMixin, viewsets.GenericViewSet):
+    permission_classes = [IsAdminUser]
     queryset = User.objects.all().order_by('uid')
     serializer_class = UserModelSerializer
     filterset_fields = ['uid']
