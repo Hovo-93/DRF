@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from rest_framework.pagination import PageNumberPagination
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
 from to.models import Project, Todo
@@ -16,6 +17,7 @@ class MaxResultsSetPagination(PageNumberPagination):
 
 # Create your views here.
 class ProjectModelViewSet(ModelViewSet):
+    permission_classes = [IsAuthenticated]
     queryset = Project.objects.all().order_by('id')
     serializer_class = ProjectModelSerializer
     filterset_fields = ['title']

@@ -12,7 +12,7 @@ class LargeResultsSetPagination(PageNumberPagination):
 
 
 class UserCustomViewSet(mixins.ListModelMixin, mixins.UpdateModelMixin, viewsets.GenericViewSet):
-    permission_classes = [IsAdminUser]
+    # permission_classes = [IsAdminUser]
     queryset = User.objects.all().order_by('uid')
     serializer_class = UserModelSerializer
     filterset_fields = ['uid']
