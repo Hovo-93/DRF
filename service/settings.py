@@ -159,3 +159,6 @@ CORS_ALLOWED_ORIGINS = [
 ]
 
 
+GRAPHENE = {
+    "SCHEMA": "service.schema.schema"
+}
