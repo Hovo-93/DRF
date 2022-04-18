@@ -17,11 +17,14 @@ class MaxResultsSetPagination(PageNumberPagination):
 
 # Create your views here.
 class ProjectModelViewSet(ModelViewSet):
-    permission_classes = [IsAuthenticated]
+    # permission_classes = [IsAuthenticated]
     queryset = Project.objects.all().order_by('id')
     serializer_class = ProjectModelSerializer
     filterset_fields = ['title']
     pagination_class = LargeResultsSetPagination
+    # def perform_destroy(self, instance):
+    #     instance.status = Project.
+    #     instance.save()
 
 
 class TodoModelViewSet(ModelViewSet):

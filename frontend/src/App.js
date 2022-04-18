@@ -33,13 +33,11 @@ if (this.is_authenticated())
 
 load_data() {
       const headers = this.get_headers()
-      let one = 'http://127.0.0.1:8000/api/users/';
+                 let one = 'http://127.0.0.1:8000/api/users/';
                  let two = 'http://127.0.0.1:8000/api/projects/';
                  const requestOne = axios.get(one, {headers} );
                  const requestTwo = axios.get(two, {headers} );
-                 axios
-                   .all([requestOne, requestTwo])
-                   .then(
+                 axios.all([requestOne, requestTwo]).then(
                      axios.spread((...responses) => {
                        const users = responses[0].data.results
                        const projects = responses[1].data.results
@@ -92,12 +90,21 @@ componentDidMount() {
       this.load_data()
 }
 
+deleteProject(id) {
+    const headers = this.get_headers()
+    const url = `http://127.0.0.1:8000/api/projects/${id}`
+    axios.delete(url, {headers}).then(response => {
+    this.setState({projects: this.state.projects.filter((item)=>item.id !== id)})
+    })
+    .catch(error => console.log(error))
+}
 
 
    render () {
        return (
-           <div className ="App">
+           <div>
                    <BrowserRouter>
+
                         <nav>
                              <ul>
                                 <li>
@@ -116,7 +123,8 @@ componentDidMount() {
                         </nav>
                             <Routes>
                                 <Route exact path='/' element={ <UserList users={this.state.users} />} />
-                                <Route exact path='/projects' element={ <ProjectList items={this.state.projects} />} />
+                                <Route exact path='/projects' element={ <ProjectList items={this.state.projects}
+                                 deleteProject={(id)=>this.deleteProject(id)} />} />
 
                                 <Route exact path='/login' element={ <LoginForm get_token={(username,
                                 password) => this.get_token(username, password)} />} />
@@ -132,7 +140,3 @@ componentDidMount() {
 
 
 export default App;
-
-
-
-

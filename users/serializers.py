@@ -9,7 +9,7 @@ class UserModelSerializer(HyperlinkedModelSerializer):
         fields = ('uid', 'username', 'first_name', 'last_name',)
 
 
-class UserSerializerWithName(serializers.ModelSerializer):
-    class Meta:
-        model = User
-        fields = ('username', 'is_active',)
+# class UserSerializerWithName(serializers.ModelSerializer):
+#     class Meta:
+#         model = User
+#         fields = ('username', 'is_active',)

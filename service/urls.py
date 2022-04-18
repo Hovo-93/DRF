@@ -24,20 +24,20 @@ from rest_framework.authtoken import views
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
 from graphene_django.views import GraphQLView
-schema_view = get_schema_view(
-    openapi.Info(
-        title="server",
-        default_version='1',
-        description="Documentation to out project",
-        contact=openapi.Contact(email="admin@admin.local"),
-        license=openapi.License(name='MIT License'),
-    ),
-    public=True,
-    # permission_classes=[permissions.AllowAny],
-)
+# schema_view = get_schema_view(
+#     openapi.Info(
+#         title="server",
+#         default_version='1',
+#         description="Documentation to out project",
+#         contact=openapi.Contact(email="admin@admin.local"),
+#         license=openapi.License(name='MIT License'),
+#     ),
+#     public=True,
+#     # permission_classes=[permissions.AllowAny],
+# )
 
 router = DefaultRouter()
-# router.register('users', UserCustomViewSet)
+router.register('users', UserCustomViewSet)
 router.register('projects', ProjectModelViewSet)
 router.register('todos', TodoModelViewSet)
 urlpatterns = [
@@ -48,13 +48,13 @@ urlpatterns = [
     # re_path(r'^api/(?P<version>\d)/users/$', UserCustomViewSet.as_view()),
     # NamespaceVersioning
 
-    path('api/users/1/', include('users.urls', namespace='1')),
-    path('api/users/2/', include('users.urls', namespace='2')),
+    # path('api/users/1/', include('users.urls', namespace='1')),
+    # path('api/users/2/', include('users.urls', namespace='2')),
 
     # Форматы представления документации(Swagger и ReDoc)
-    re_path(r'^swagger(?P<format>\.json|\.yaml)$', schema_view.without_ui(cache_timeout=0), name='schema-json'),
-    path('swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
-    path('redoc/', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
-    #адрес для GraphQL-запросов
-    path("graphql/", GraphQLView.as_view(graphiql=True)),
+    # re_path(r'^swagger(?P<format>\.json|\.yaml)$', schema_view.without_ui(cache_timeout=0), name='schema-json'),
+    # path('swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
+    # path('redoc/', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
+    # #адрес для GraphQL-запросов
+    # path("graphql/", GraphQLView.as_view(graphiql=True)),
 ]

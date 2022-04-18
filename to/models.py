@@ -17,7 +17,7 @@ class Todo(models.Model):
         (CLOSED, 'закрыто'),
 
     )
-    project = models.ForeignKey(Project, on_delete=models.DO_NOTHING,max_length=128)
+    project = models.ForeignKey(Project, on_delete=models.CASCADE,max_length=128)
     created = models.DateTimeField(auto_now_add=True, verbose_name='Создан')
     updated = models.DateTimeField(auto_now=True, verbose_name='Обновлен')
     user = models.ForeignKey(User, on_delete=models.CASCADE)
