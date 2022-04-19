@@ -4,8 +4,9 @@ import './App.css';
 import UserList from './components/User.js';
 import ProjectList from './components/Project.js';
 import LoginForm from './components/Auth.js';
+import ProjectForm from './components/ProjectForm'
 import axios from 'axios';
-import {HashRouter, Route,Link,Routes,BrowserRouter } from 'react-router-dom';
+import {Route,Link,Routes,BrowserRouter} from 'react-router-dom';
 import Cookies from 'universal-cookie';
 
 
@@ -98,6 +99,18 @@ deleteProject(id) {
     })
     .catch(error => console.log(error))
 }
+createProject(name, user) {
+    const headers = this.get_headers()
+    const data = {name: name,user:user}
+    const url =`http://127.0.0.1:8000/api/projects/`
+    axios.post(url, data, {headers}).then(response => {
+        let new_project = response.data
+        const user = this.state.users.filter((item) => item.id === new_project.user)[0]
+        new_project.user = user
+        this.setState({projects: [...this.state.projects, new_project]})
+    })  .catch(error => console.log(error))
+}
+
 
 
    render () {
@@ -125,9 +138,12 @@ deleteProject(id) {
                                 <Route exact path='/' element={ <UserList users={this.state.users} />} />
                                 <Route exact path='/projects' element={ <ProjectList items={this.state.projects}
                                  deleteProject={(id)=>this.deleteProject(id)} />} />
-
                                 <Route exact path='/login' element={ <LoginForm get_token={(username,
                                 password) => this.get_token(username, password)} />} />
+                                <Route exact path='/projects/create' element={ <ProjectForm users={this.state.users}
+                                createProject={(name, user) => this.createProject(name,user)} />}
+                                />
+
 
                             </Routes>
                     </BrowserRouter>
